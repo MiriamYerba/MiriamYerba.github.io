@@ -17,12 +17,22 @@ body {
     /* Asegura que el body tenga al menos la altura de la ventana */
     margin: 0;
     font-family: Arial, sans-serif;
-    background-image: url('img/Fondo.svg');
+    background-image: url('img/fondo.jpg');
 
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
+    background-attachment: fixed;
 
 
+}
+
+main .descripción {
+    background-color: rgba(255, 255, 255, 0.5); /* Fondo blanco con opacidad del 90% */
+    padding: 0.5rem; /* Espaciado interno alrededor del texto */
+    border-radius: 10px; /* Bordes redondeados opcionales */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para darle profundidad */
+    max-width: 100%; /* Limita el ancho máximo para mejorar la legibilidad */
+    margin: 1rem auto; /* Centrará el <div> y añadirá margen automático */
 }
 
 header {
@@ -42,11 +52,23 @@ header .btn {
     display: inline-block;
     padding: 0.5rem;
     color: white;
-    text-decoration: none;
-    /* Elimina la línea de subrayado */
     border-radius: 5px;
     font-size: 1.5rem;
-    /* Tamaño del icono */
+    text-decoration: none;
+
+}
+
+header .btn:visited {
+    color: white;
+    /* Asegura que el color del texto permanezca blanco después de visitar */
+}
+
+header .btn:hover,
+header .btn:focus {
+    text-decoration: none;
+    /* Elimina la subrayado en hover y focus */
+    color: white;
+    /* Mantiene el color del texto blanco en hover y focus */
 }
 
 main {
@@ -61,6 +83,7 @@ main {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+
 }
 
 .proyecto {
@@ -71,22 +94,31 @@ main {
     max-width: 300px;
     text-align: center;
     background-color: white;
-    /* Fondo blanco para el contenedor del proyecto */
+    
 }
 
 .proyecto img {
     width: 100%;
     height: auto;
+    
 }
 
 .proyecto h2 {
-    margin: 0.5rem 0;
+    font-size: 1.8rem; /* Ajusta el tamaño del texto del <h2> según sea necesario */
+    margin: 1rem 0; /* Añadir margen superior e inferior */
+}
+.proyecto p {
+    font-weight: 400; /* Grosor ligero para el texto del <p> */
+    font-size: 1rem; /* Ajusta el tamaño del texto del <p> si es necesario */
+    line-height: 1.6; /* Espaciado entre líneas para mejor legibilidad */
+    margin: 0.5rem 0; /* Añadir margen superior e inferior */
 }
 
 .galeria {
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+    
 }
 
 .foto {
@@ -97,6 +129,8 @@ main {
     cursor: pointer;
     transition: transform 0.3s ease;
     /* Transición suave al ampliar */
+    border-radius: 10px; /* Bordes redondeados opcionales */
+
 }
 
 .foto:hover {
@@ -157,7 +191,7 @@ main {
 footer {
     background-color: #333;
     color: white;
-    padding: 1rem;
+    padding: 0.5rem;
     text-align: center;
     width: 100%;
 }
@@ -194,16 +228,20 @@ footer {
     }
 
     body {
+        display: flex;
+        flex-direction: column;
         /* Organiza el contenido en columna */
         min-height: 100vh;
         /* Asegura que el body tenga al menos la altura de la ventana */
         margin: 0;
         font-family: Arial, sans-serif;
-        background-image: url('img/Fondo.svg');
-        background-repeat: repeat;
-        background-size: fixed;
-
-
+        background-image: url('img/fondo2.jpg');
+    
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed;
+    
+    
     }
 }
 
@@ -238,11 +276,12 @@ footer {
         /* Asegura que el body tenga al menos la altura de la ventana */
         margin: 0;
         font-family: Arial, sans-serif;
-        background-image: url('img/Fondo.svg');
-
+        background-image: url('img/fondo1.jpg');
+    
         background-repeat: no-repeat;
         background-size: cover;
-
-
+        background-attachment: fixed;
+    
+    
     }
 }
