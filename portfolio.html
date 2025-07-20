@@ -38,7 +38,7 @@ const res = await fetch('./frontend/public/data/proyectos.json');
           card.onclick = () => verDetalle(p.id);
 
           card.innerHTML  = `
-            <img src="${imagen}" alt="Proyecto">
+<img src="/img_proyectos/${p.imagenes && p.imagenes[0] ? p.imagenes[0] : 'placeholder.jpg'}" alt="Proyecto">
             <div class="contenido">
               <h3>${p.descripcion}</h3>
               <p class="descripcion">${p.descripcionLarga || p.descripcion}</p>
