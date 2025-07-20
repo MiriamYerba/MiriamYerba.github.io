@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Detalle del Proyecto</title>
+  <link rel="stylesheet" href="proyecto.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+<body>
+  <div class="proyecto-detalle">
+    <h1 id="titulo">Proyecto</h1>
+    <div id="descripcionLarga" class="descripcion"></div>
+    <div id="galeria" class="galeria"></div>
+    <br />
+ <button onclick="window.history.back()" class="btn-volver">
+    <span class="material-symbols-outlined">arrow_back</span>
+  </button>
+</div>
+
+  <!-- Lightbox -->
+  <div id="lightbox" class="lightbox" onclick="cerrarLightboxSiClickFuera(event)">
+    <img id="lightbox-img" />
+  </div>
+
+  <script>
+    async function cargarDetalleProyecto() {
+      const params = new URLSearchParams(window.location.search);
+      const id = parseInt(params.get('id'));
+
+      if (!id) {
+        alert('ID de proyecto no proporcionado');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/proyectos');
+        const proyectos = await res.json();
+        const proyecto = proyectos.find(p => p.id === id);
+
+        if (!proyecto) {
+          document.getElementById('titulo').innerText = 'Proyecto no encontrado';
+          return;
+        }
+
+        document.getElementById('titulo').innerText = proyecto.descripcion;
+        document.getElementById('descripcionLarga').innerText = proyecto.descripcionLarga || '';
+
+        const galeria = document.getElementById('galeria');
+        galeria.innerHTML = '';
+
+        proyecto.imagenes.forEach(url => {
+          const img = document.createElement('img');
+          img.src = url;
+          img.alt = "Imagen del proyecto";
+          img.onclick = () => mostrarLightbox(url);
+          galeria.appendChild(img);
+        });
+
+      } catch (err) {
+        console.error('Error al cargar proyecto:', err);
+      }
+    }
+
+    function mostrarLightbox(url) {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightboxImg.src = url;
+      lightbox.style.display = 'flex';
+    }
+
+    function cerrarLightbox() {
+      document.getElementById('lightbox').style.display = 'none';
+    }
+
+    function cerrarLightboxSiClickFuera(event) {
+      const img = document.getElementById('lightbox-img');
+      if (!img.contains(event.target)) {
+        cerrarLightbox();
+      }
+    }
+
+    window.onload = cargarDetalleProyecto;
+  </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>|
+
+</body>
+</html>
