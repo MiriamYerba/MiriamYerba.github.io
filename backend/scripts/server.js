@@ -15,15 +15,14 @@ const PORT = 3000;
 
 // === Rutas absolutas ===
 const ROOT_PATH = path.resolve(__dirname, '../..');
-const DATA_PATH = path.join(ROOT_PATH, 'frontend', 'public', 'data', 'proyectos.json');
-const UPLOADS_PATH = path.join(ROOT_PATH, 'frontend', 'public', 'uploads');
+const DATA_PATH = path.join(ROOT_PATH, 'data', 'proyectos.json');
+const UPLOADS_PATH = path.join(ROOT_PATH, 'uploads');
 
 // === Middlewares ===
 app.use(cors());
 app.use(express.json());
 app.use('/uploads', express.static(UPLOADS_PATH));
-app.use(express.static(path.join(ROOT_PATH, 'frontend', 'public')));
-
+app.use(express.static(ROOT_PATH)); // ✅ sirve archivos desde la raíz (index.html, proyecto.html, etc.)
 
 // === Configuración de multer ===
 const storage = multer.diskStorage({
@@ -44,10 +43,10 @@ app.get('/api/proyectos', (req, res) => {
   const data = fs.readFileSync(DATA_PATH);
   res.json(JSON.parse(data));
 });
-app.get('/proyecto.html', (req, res) => {
-res.sendFile(path.join(ROOT_PATH, 'frontend', 'public', 'html', 'proyecto.html'));
-});
 
+app.get('/proyecto.html', (req, res) => {
+  res.sendFile(path.join(ROOT_PATH, 'proyecto.html'));
+});
 
 app.post('/api/proyectos', (req, res) => {
   const { descripcion, descripcionLarga, imagenes } = req.body;
@@ -131,8 +130,11 @@ app.put('/api/proyectos/:id', (req, res) => {
   res.json(proyectos[idx]);
 });
 
+// ✅ Catch-all para frontend SPA o recarga de rutas no definidas (index.html en raíz)
 app.use((req, res) => {
-  res.sendFile(path.join(ROOT_PATH, 'frontend', 'public', 'html', 'index.html'));
+  const indexPath = path.join(ROOT_PATH, 'index.html');
+  console.log('📄 Serviendo index desde:', indexPath);
+  res.sendFile(indexPath);
 });
 
 // Inicio del servidor

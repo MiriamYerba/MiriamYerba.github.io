@@ -1,4 +1,5 @@
 const API_URL = 'http://localhost:3000';
+const BASE_URL = location.hostname.includes('localhost') ? 'http://localhost:3000' : 'https://TU_BACKEND_EN_PRODUCCION';
 
 document.getElementById('formulario').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -20,7 +21,7 @@ document.getElementById('formulario').addEventListener('submit', async (e) => {
 
   let urls;
   try {
-    const uploadRes = await fetch('/api/upload', {
+    const uploadRes = await fetch(`${BASE_URL}/api/upload`, {
       method: 'POST',
       body: formData
     });
@@ -35,7 +36,7 @@ document.getElementById('formulario').addEventListener('submit', async (e) => {
 
   // 2. Crear proyecto
   try {
-    const res = await fetch('/api/proyectos', {
+    const res = await fetch(`${BASE_URL}/api/proyectos`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ descripcion, descripcionLarga, imagenes: urls })
@@ -64,7 +65,7 @@ async function cargarDetalleProyecto() {
   }
 
   try {
-    const res = await fetch('/api/proyectos');
+    const res = await fetch(`${BASE_URL}/api/proyectos`);
     const proyectos = await res.json();
     const proyecto = proyectos.find(p => p.id === id);
 
@@ -98,7 +99,6 @@ function mostrarLightbox(url) {
   lightboxImg.src = url;
   lightbox.style.display = 'flex';
 }
-const CLAVE = 'admin123';
     let proyectosGlobal = [];
 
     function mostrarLoginAdmin() {
@@ -110,7 +110,7 @@ const CLAVE = 'admin123';
 
     function login() {
       const pass = document.getElementById('adminPass').value;
-      if (pass === CLAVE) {
+      if (pass === ADMIN_PASSWORD) {
         document.getElementById('loginSection').style.display = 'none';
         document.getElementById('panelSection').style.display = 'block';
         document.getElementById('volverBtn').style.display = 'inline';
@@ -133,7 +133,7 @@ const CLAVE = 'admin123';
     }
 
     async function cargarProyectosAdmin() {
-      const res = await fetch('/api/proyectos');
+      const res = await fetch(`${BASE_URL}/api/proyectos`);
       proyectosGlobal = await res.json();
       renderizarProyectos(proyectosGlobal);
     }
@@ -161,7 +161,7 @@ const CLAVE = 'admin123';
     }
 
     async function actualizarDescripcion(id, nuevaDesc) {
-      await fetch(`/api/proyectos/${id}`, {
+      await fetch(`${BASE_URL}/api/proyectos/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ descripcion: nuevaDesc })
@@ -172,7 +172,7 @@ const CLAVE = 'admin123';
   const galeria = document.getElementById('galeriaVisitante');
   galeria.innerHTML = '';
 
-  const res = await fetch('/api/proyectos');
+const res = await fetch(`${BASE_URL}/api/proyectos`);
   const proyectos = await res.json();
 
   proyectos.forEach(p => {
@@ -203,7 +203,7 @@ const CLAVE = 'admin123';
       if (!confirm('¿Estás seguro de que quieres eliminar este proyecto? Esta acción no se puede deshacer.')) {
         return;
       }
-      await fetch(`/api/proyectos/${id}`, { method: 'DELETE' });
+const res = await fetch(`${BASE_URL}/api/proyectos`);
       cargarProyectosAdmin();
     }
 
@@ -223,7 +223,7 @@ const CLAVE = 'admin123';
       });
       const { urls } = await uploadRes.json();
 
-      await fetch('/api/proyectos', {
+      await fetch(`${BASE_URL}/api/proyectos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ descripcion, descripcionLarga, imagenes: urls })
@@ -234,11 +234,11 @@ const CLAVE = 'admin123';
     });
 
     function verDetalle(id) {
-      window.location.href = `/proyecto.html?id=${id}`;
+window.location.href = 'proyecto.html?id=' + id;
     }
 
     function cargarDetalleProyecto(id) {
-  fetch('/api/proyectos')
+  fetch(`${BASE_URL}/api/proyectos`)
     .then(res => res.json())
     .then(proyectos => {
       const proyecto = proyectos.find(p => p.id === id);
@@ -336,7 +336,7 @@ async function guardarEdicionProyecto() {
   cargarProyectosAdmin();
 }
   async function cargarProyectos() {
-      const res = await fetch('/api/proyectos');
+const res = await fetch(`${BASE_URL}/api/proyectos`);
       const proyectos = await res.json();
       const contenedor = document.getElementById('galeria');
       proyectos.forEach(p => {
@@ -360,7 +360,7 @@ async function guardarEdicionProyecto() {
       }
 
       try {
-        const res = await fetch('/api/proyectos');
+const res = await fetch(`${BASE_URL}/api/proyectos`);
         const proyectos = await res.json();
         const proyecto = proyectos.find(p => p.id === id);
 

@@ -1,6 +1,3 @@
-// ✅ Al cargar la página, siempre cerramos la sesión de admin
-
-
 // ✅ Mostrar campo de login
 function mostrarLoginAdmin() {
   const loginDiv = document.getElementById('adminLogin');
@@ -19,9 +16,8 @@ async function login() {
   });
 
   if (res.ok) {
-    // Marcamos como admin en sessionStorage (no localStorage)
     sessionStorage.setItem('isAdmin', 'true');
-    window.location.href = '/html/admin.html';
+    window.location.href = '/admin.html';  // ✅ corregido
   } else {
     alert('Contraseña incorrecta');
   }
@@ -31,6 +27,5 @@ async function login() {
 function entrarComoVisitante(e) {
   if (e) e.preventDefault();
   sessionStorage.removeItem('isAdmin');
-window.location.href = '/html/portfolio.html';
+window.location.href = `/portfolio.html`;
 }
-

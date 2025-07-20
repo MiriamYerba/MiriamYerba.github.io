@@ -37,7 +37,7 @@ async function cargarProyectosVisitante() {
 
 
 function verDetalle(id) {
-  window.location.href = `/html/proyecto.html?id=${id}`;
+  window.location.href = `/proyecto.html?id=${id}`;
 }
 
 window.onload = cargarProyectosVisitante;
