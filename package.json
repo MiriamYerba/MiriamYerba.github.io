@@ -1,13 +1,12 @@
 {
   "name": "miruweb2.0",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "backend/scripts/server.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon backend/server.js",
-    "dev": "nodemon backend/server.js",
-  "copiar-img": "node backend/routes/copiar-imagenes.js"
+    "start": "nodemon backend/scripts/server.js",
+    "dev": "nodemon backend/scripts/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",

@@ -1,8 +1,4 @@
 const API_URL = 'http://localhost:3000';
-import dotenv from 'dotenv';
-dotenv.config();
-
-const res = await fetch('proyectos.json');
 
 document.getElementById('formulario').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -39,7 +35,7 @@ document.getElementById('formulario').addEventListener('submit', async (e) => {
 
   // 2. Crear proyecto
   try {
-    const res = await fetch('proyectos.json', {
+    const res = await fetch('/api/proyectos', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ descripcion, descripcionLarga, imagenes: urls })
@@ -68,7 +64,7 @@ async function cargarDetalleProyecto() {
   }
 
   try {
-const res = await fetch('proyectos.json');
+    const res = await fetch('/api/proyectos');
     const proyectos = await res.json();
     const proyecto = proyectos.find(p => p.id === id);
 
@@ -96,57 +92,33 @@ const res = await fetch('proyectos.json');
   }
 }
 
-app.post('/api/login', (req, res) => {
-  const { pass } = req.body;
-  if (pass === process.env.ADMIN_PASS) {
-    res.json({ ok: true });
-  } else {
-    res.status(401).json({ error: 'Contraseña incorrecta' });
-  }
-});
-
-
-app.get('/api/admin-pass', (req, res) => {
-  res.json({ pass: process.env.ADMIN_PASS });
-});
-
-
 function mostrarLightbox(url) {
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
   lightboxImg.src = url;
   lightbox.style.display = 'flex';
 }
-
+const CLAVE = 'admin123';
     let proyectosGlobal = [];
 
     function mostrarLoginAdmin() {
       document.getElementById('adminLogin').style.display = 'block';
+      // Opcional: ocultar los botones de ingreso para evitar doble click
       const botones = document.querySelectorAll('#loginSection > button');
       botones.forEach(btn => btn.style.display = 'none');
     }
 
-  async function login() {
-  const pass = document.getElementById('adminPass').value;
-  try {
-    const res = await fetch('/api/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ pass })
-    });
-
-    if (!res.ok) throw new Error('Login fallido');
-
-    // Si llega acá, autenticado correctamente
-    document.getElementById('loginSection').style.display = 'none';
-    document.getElementById('panelSection').style.display = 'block';
-    document.getElementById('volverBtn').style.display = 'inline';
-    cargarProyectosAdmin();
-  } catch (err) {
-    alert('Contraseña incorrecta');
-  }
-}
-
+    function login() {
+      const pass = document.getElementById('adminPass').value;
+      if (pass === CLAVE) {
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('panelSection').style.display = 'block';
+        document.getElementById('volverBtn').style.display = 'inline';
+        cargarProyectosAdmin();
+      } else {
+        alert('Contraseña incorrecta');
+      }
+    }
 
     function entrarComoVisitante() {
       window.location.href = "index.html";
@@ -161,7 +133,7 @@ function mostrarLightbox(url) {
     }
 
     async function cargarProyectosAdmin() {
-const res = await fetch('proyectos.json');
+      const res = await fetch('/api/proyectos');
       proyectosGlobal = await res.json();
       renderizarProyectos(proyectosGlobal);
     }
@@ -231,7 +203,7 @@ const res = await fetch('proyectos.json');
       if (!confirm('¿Estás seguro de que quieres eliminar este proyecto? Esta acción no se puede deshacer.')) {
         return;
       }
-      await fetch(`proyectos.json/${id}`, { method: 'DELETE' });
+      await fetch(`/api/proyectos/${id}`, { method: 'DELETE' });
       cargarProyectosAdmin();
     }
 
@@ -251,7 +223,7 @@ const res = await fetch('proyectos.json');
       });
       const { urls } = await uploadRes.json();
 
-      await fetch('proyectos.json', {
+      await fetch('/api/proyectos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ descripcion, descripcionLarga, imagenes: urls })
@@ -266,7 +238,7 @@ const res = await fetch('proyectos.json');
     }
 
     function cargarDetalleProyecto(id) {
-  fetch('proyectos.json')
+  fetch('/api/proyectos')
     .then(res => res.json())
     .then(proyectos => {
       const proyecto = proyectos.find(p => p.id === id);
@@ -354,7 +326,7 @@ async function guardarEdicionProyecto() {
   }
 
   // Actualizar en backend
-  await fetch(`proyectos.json/${id}`, {
+  await fetch(`/api/proyectos/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ descripcion, descripcionLarga, imagenes })
@@ -364,7 +336,7 @@ async function guardarEdicionProyecto() {
   cargarProyectosAdmin();
 }
   async function cargarProyectos() {
-      const res = await fetch('proyectos.json');
+      const res = await fetch('/api/proyectos');
       const proyectos = await res.json();
       const contenedor = document.getElementById('galeria');
       proyectos.forEach(p => {
@@ -388,7 +360,7 @@ async function guardarEdicionProyecto() {
       }
 
       try {
-        const res = await fetch('proyectos.json');
+        const res = await fetch('/api/proyectos');
         const proyectos = await res.json();
         const proyecto = proyectos.find(p => p.id === id);
 
@@ -435,24 +407,12 @@ function cerrarLightboxSiClickFuera(event) {
   }
 }
 
-function cerrarLightbox() {
-  document.getElementById('lightbox-img').style.display = 'none';
-}
+
 
 document.addEventListener('DOMContentLoaded', () => {
   const lightbox = document.getElementById('lightbox');
   lightbox.addEventListener('click', cerrarLightbox);
 });
 
-
-const dataPath = path.join(__dirname, 'data', 'proyectos.json');
-
-if (!fs.existsSync(dataPath)) {
-  fs.writeFileSync(dataPath, '[]'); // crea archivo vacío si no existe
-}
-
-const proyectos = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-
 cargarDetalleProyecto();
 cargarProyectos();
-cargarDetalleProyecto();

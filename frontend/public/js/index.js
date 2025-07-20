@@ -21,7 +21,7 @@ async function login() {
   if (res.ok) {
     // Marcamos como admin en sessionStorage (no localStorage)
     sessionStorage.setItem('isAdmin', 'true');
-    window.location.href = 'admin.html';
+    window.location.href = '/html/admin.html';
   } else {
     alert('Contraseña incorrecta');
   }
@@ -31,6 +31,6 @@ async function login() {
 function entrarComoVisitante(e) {
   if (e) e.preventDefault();
   sessionStorage.removeItem('isAdmin');
-  window.location.href = 'portfolio.html';
+window.location.href = '/html/portfolio.html';
 }
 

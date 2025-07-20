@@ -1,4 +1,3 @@
-// === backend/server.js ===
 import express from 'express';
 import cors from 'cors';
 import multer from 'multer';
@@ -8,34 +7,47 @@ import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 dotenv.config();
 
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
 const PORT = 3000;
 
-const DATA_PATH = path.join(__dirname, 'data', 'proyectos.json');
-const UPLOADS_PATH = path.join(__dirname, 'uploads');
+// === Rutas absolutas ===
+const ROOT_PATH = path.resolve(__dirname, '../..');
+const DATA_PATH = path.join(ROOT_PATH, 'frontend', 'public', 'data', 'proyectos.json');
+const UPLOADS_PATH = path.join(ROOT_PATH, 'frontend', 'public', 'uploads');
 
-// Middleware
+// === Middlewares ===
 app.use(cors());
 app.use(express.json());
-app.use(express.static('public'));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(UPLOADS_PATH));
+app.use(express.static(path.join(ROOT_PATH, 'frontend', 'public')));
 
-// Configurar multer para subir imágenes
+
+// === Configuración de multer ===
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, UPLOADS_PATH),
-  filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname)
+  destination: function (req, file, cb) {
+    cb(null, UPLOADS_PATH);
+  },
+  filename: function (req, file, cb) {
+    const timestamp = Date.now();
+    const uniqueName = `${timestamp}-${file.originalname}`;
+    cb(null, uniqueName);
+  }
 });
 const upload = multer({ storage });
 
-// RUTAS API
+// === RUTAS API ===
+
 app.get('/api/proyectos', (req, res) => {
   const data = fs.readFileSync(DATA_PATH);
   res.json(JSON.parse(data));
 });
+app.get('/proyecto.html', (req, res) => {
+res.sendFile(path.join(ROOT_PATH, 'frontend', 'public', 'html', 'proyecto.html'));
+});
+
 
 app.post('/api/proyectos', (req, res) => {
   const { descripcion, descripcionLarga, imagenes } = req.body;
@@ -59,7 +71,7 @@ app.post('/api/proyectos', (req, res) => {
 
 app.delete('/api/proyectos/:id', (req, res) => {
   const id = parseInt(req.params.id);
-  const { password } = req.query; // 👈 importante: viene por query, no por body
+  const { password } = req.query;
 
   if (password !== process.env.ADMIN_PASSWORD) {
     return res.status(401).json({ error: 'Contraseña incorrecta' });
@@ -72,7 +84,6 @@ app.delete('/api/proyectos/:id', (req, res) => {
     return res.status(404).json({ error: 'Proyecto no encontrado' });
   }
 
-  // Eliminar imágenes físicas
   if (Array.isArray(proyecto.imagenes)) {
     proyecto.imagenes.forEach(imgUrl => {
       const filename = path.basename(imgUrl);
@@ -93,7 +104,6 @@ app.delete('/api/proyectos/:id', (req, res) => {
   res.status(204).send();
 });
 
-
 app.post('/api/login', express.json(), (req, res) => {
   const { password } = req.body;
   if (password === process.env.ADMIN_PASSWORD) {
@@ -103,10 +113,8 @@ app.post('/api/login', express.json(), (req, res) => {
   }
 });
 
-
-
 app.post('/api/upload', upload.array('imagenes', 10), (req, res) => {
-const urls = req.files.map(f => `uploads/${f.filename}`);
+  const urls = req.files.map(f => `uploads/${f.filename}`);
   res.json({ urls });
 });
 
@@ -123,9 +131,9 @@ app.put('/api/proyectos/:id', (req, res) => {
   res.json(proyectos[idx]);
 });
 
+app.use((req, res) => {
+  res.sendFile(path.join(ROOT_PATH, 'frontend', 'public', 'html', 'index.html'));
+});
 
-
-// Static al final
-app.use(express.static(path.join(__dirname, '..')));
-
+// Inicio del servidor
 app.listen(PORT, () => console.log(`✅ Servidor corriendo en http://localhost:${PORT}`));

@@ -45,11 +45,13 @@ function renderizarProyectos(lista) {
 
   galeria.innerHTML = '';
   lista.forEach(p => {
+const primeraImagen = p.imagenes && p.imagenes.length > 0 ? '/' + p.imagenes[0] : '/img/placeholder.jpg';
+
     const card = document.createElement('div');
     card.className = 'card';
     card.innerHTML = `
       <h3>${p.descripcion}</h3>
-      <img src="${p.imagenes && p.imagenes[0] ? p.imagenes[0] : ''}" alt="Proyecto" onclick="verDetalle(${p.id})">
+      <img src="${primeraImagen}" alt="Imagen del proyecto" onclick="verDetalle(${p.id})" style="cursor:pointer;">
       <div class="acciones">
         <span class="material-symbols-outlined edit-icon" onclick="abrirEditor(${p.id})">edit</span>
         <span class="material-symbols-outlined delete-icon" onclick="eliminar(${p.id})">delete_forever</span>
@@ -58,6 +60,7 @@ function renderizarProyectos(lista) {
     galeria.appendChild(card);
   });
 }
+
 
 
 function filtrarProyectos() {
@@ -132,6 +135,11 @@ function mostrarImagenesEditor(imagenes) {
   const cont = document.getElementById('editImagenes');
   cont.innerHTML = '';
   imagenes.forEach((url, idx) => {
+    // Corrige la URL si es relativa
+    if (!url.startsWith('http') && !url.startsWith('/')) {
+      url = '/' + url;
+    }
+
     const div = document.createElement('div');
     div.style = "display:inline-block;position:relative;margin:5px;";
     div.innerHTML = `
@@ -141,6 +149,7 @@ function mostrarImagenesEditor(imagenes) {
     cont.appendChild(div);
   });
 }
+
 
 function eliminarImagenEditor(idx) {
   proyectoEditando.imagenes.splice(idx, 1);
@@ -166,18 +175,23 @@ async function guardarEdicionProyecto() {
     const data = await res.json();
     imagenes = imagenes.concat(data.urls);
   }
-
+try{
   await fetch(`/api/proyectos/${id}`, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ descripcion, descripcionLarga, imagenes })
-  });
+  method: 'PUT',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ descripcion, descripcionLarga, imagenes })
+});
+}catch(err){
+  console.error(err);
+    alert('Error al guardar proyecto');
+  console.error(err);
+}
 
-  acciones.innerHTML = `
-  <span class="material-symbols-outlined edit" onclick="editarProyecto('${proyecto.id}')">edit</span>
-  <span class="material-symbols-outlined delete" onclick="eliminarProyecto('${proyecto.id}')">delete_forever</span>
-`;
 
-  cerrarEditor();
-  cargarProyectosAdmin();
+
+
+
+cerrarEditor();
+cargarProyectosAdmin();
+
 }

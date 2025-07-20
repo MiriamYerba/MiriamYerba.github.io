@@ -1,7 +1,7 @@
 body, html {
   height: 100%;
   margin: 0;
-  background-image: url('img/1752803010694-fondo.jpg'); /* O la ruta correcta */
+  background-image: url('../img/Fondo.jpg'); /* O la ruta correcta */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
