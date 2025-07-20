@@ -106,7 +106,7 @@ app.post('/api/login', express.json(), (req, res) => {
 
 
 app.post('/api/upload', upload.array('imagenes', 10), (req, res) => {
-  const urls = req.files.map(f => `/uploads/${f.filename}`);
+const urls = req.files.map(f => `uploads/${f.filename}`);
   res.json({ urls });
 });
 
