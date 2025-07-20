@@ -2,6 +2,7 @@ const API_URL = 'http://localhost:3000';
 import dotenv from 'dotenv';
 dotenv.config();
 
+const res = await fetch('proyectos.json');
 
 document.getElementById('formulario').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -38,7 +39,7 @@ document.getElementById('formulario').addEventListener('submit', async (e) => {
 
   // 2. Crear proyecto
   try {
-    const res = await fetch('/api/proyectos', {
+    const res = await fetch('proyectos.json', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ descripcion, descripcionLarga, imagenes: urls })
@@ -67,7 +68,7 @@ async function cargarDetalleProyecto() {
   }
 
   try {
-    const res = await fetch('/api/proyectos');
+const res = await fetch('proyectos.json');
     const proyectos = await res.json();
     const proyecto = proyectos.find(p => p.id === id);
 
@@ -160,7 +161,7 @@ function mostrarLightbox(url) {
     }
 
     async function cargarProyectosAdmin() {
-      const res = await fetch('/api/proyectos');
+const res = await fetch('proyectos.json');
       proyectosGlobal = await res.json();
       renderizarProyectos(proyectosGlobal);
     }
@@ -188,7 +189,7 @@ function mostrarLightbox(url) {
     }
 
     async function actualizarDescripcion(id, nuevaDesc) {
-      await fetch(`/api/proyectos/${id}`, {
+      await fetch(`proyectos.json/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ descripcion: nuevaDesc })
@@ -199,7 +200,7 @@ function mostrarLightbox(url) {
   const galeria = document.getElementById('galeriaVisitante');
   galeria.innerHTML = '';
 
-  const res = await fetch('/api/proyectos');
+  const res = await fetch('proyectos.json');
   const proyectos = await res.json();
 
   proyectos.forEach(p => {
@@ -230,7 +231,7 @@ function mostrarLightbox(url) {
       if (!confirm('¿Estás seguro de que quieres eliminar este proyecto? Esta acción no se puede deshacer.')) {
         return;
       }
-      await fetch(`/api/proyectos/${id}`, { method: 'DELETE' });
+      await fetch(`proyectos.json/${id}`, { method: 'DELETE' });
       cargarProyectosAdmin();
     }
 
@@ -250,7 +251,7 @@ function mostrarLightbox(url) {
       });
       const { urls } = await uploadRes.json();
 
-      await fetch('/api/proyectos', {
+      await fetch('proyectos.json', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ descripcion, descripcionLarga, imagenes: urls })
@@ -265,7 +266,7 @@ function mostrarLightbox(url) {
     }
 
     function cargarDetalleProyecto(id) {
-  fetch('/api/proyectos')
+  fetch('proyectos.json')
     .then(res => res.json())
     .then(proyectos => {
       const proyecto = proyectos.find(p => p.id === id);
@@ -353,7 +354,7 @@ async function guardarEdicionProyecto() {
   }
 
   // Actualizar en backend
-  await fetch(`/api/proyectos/${id}`, {
+  await fetch(`proyectos.json/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ descripcion, descripcionLarga, imagenes })
@@ -363,7 +364,7 @@ async function guardarEdicionProyecto() {
   cargarProyectosAdmin();
 }
   async function cargarProyectos() {
-      const res = await fetch('/api/proyectos');
+      const res = await fetch('proyectos.json');
       const proyectos = await res.json();
       const contenedor = document.getElementById('galeria');
       proyectos.forEach(p => {
@@ -387,7 +388,7 @@ async function guardarEdicionProyecto() {
       }
 
       try {
-        const res = await fetch('/api/proyectos');
+        const res = await fetch('proyectos.json');
         const proyectos = await res.json();
         const proyecto = proyectos.find(p => p.id === id);
 

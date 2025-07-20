@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon backend/server.js",
-    "dev": "nodemon backend/server.js"
+    "dev": "nodemon backend/server.js",
+  "copiar-img": "node backend/routes/copiar-imagenes.js"
   },
   "keywords": [],
   "author": "",
