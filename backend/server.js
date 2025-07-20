@@ -126,6 +126,6 @@ app.put('/api/proyectos/:id', (req, res) => {
 
 
 // Static al final
-app.use(express.static(path.join(__dirname, '../frontend/public')));
+app.use(express.static(path.join(__dirname, '..')));
 
 app.listen(PORT, () => console.log(`✅ Servidor corriendo en http://localhost:${PORT}`));

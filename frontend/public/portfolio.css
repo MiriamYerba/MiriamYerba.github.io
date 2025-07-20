@@ -2,10 +2,10 @@ body, html {
   height: 100%;
   margin: 0;
   background-image: url('img/1752803010694-fondo.jpg'); /* O la ruta correcta */
-  background-size: cover;           /* Escala la imagen para cubrir toda la pantalla */
-  background-position: center;      /* Centra la imagen */
-  background-repeat: no-repeat;     /* ❌ Evita que se repita */
-  background-attachment: fixed;     /* (opcional) Hace que el fondo quede fijo al hacer scroll */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   font-family: 'Segoe UI', sans-serif;
 }
 
@@ -13,7 +13,7 @@ body, html {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  pointer-events: none; /* evita que el título bloquee clicks */
+  pointer-events: none;
 }
 
 .navbar {
@@ -23,9 +23,6 @@ body, html {
   display: flex;
   align-items: center;
 }
-
-
-
 
 .btn-volver {
   background-color: #444;
@@ -57,12 +54,14 @@ main {
 }
 
 .galeria {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;  /* Centra horizontalmente */
+  gap: 30px;                /* Más espacio entre tarjetas */
+  padding: 40px;
 }
 
+/* Tarjetas más grandes */
 .card-proyecto {
   background-color: rgba(255, 255, 255, 0.9);
   border: 1px solid #ccc;
@@ -72,11 +71,17 @@ main {
   flex-direction: column;
   color: #333;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  width: 360px;              /* Más anchas */
+  transition: transform 0.2s ease;
+}
+
+.card-proyecto:hover {
+  transform: scale(1.03);    /* Sutil efecto al pasar el mouse */
 }
 
 .card-proyecto img {
   width: 100%;
-  height: 200px;
+  height: 240px;             /* Más alto */
   object-fit: cover;
 }
 
@@ -85,14 +90,13 @@ main {
 }
 
 .card-proyecto h3 {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin-bottom: 0.5rem;
 }
 
 .card-proyecto .descripcion {
-  margin-top: auto;
-  font-size: 0.95rem;
+  font-size: 1rem;
   color: #555;
-  word-break: break-word; /* 👉 Corta palabras largas */
-  overflow-wrap: break-word; /* 👉 Alternativa compatible */
+  word-break: break-word;
+  overflow-wrap: break-word;
 }

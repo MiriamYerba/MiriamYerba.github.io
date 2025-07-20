@@ -173,11 +173,7 @@ async function guardarEdicionProyecto() {
     body: JSON.stringify({ descripcion, descripcionLarga, imagenes })
   });
 
-  acciones.innerHTML = `
-  <span class="material-symbols-outlined edit" onclick="editarProyecto('${proyecto.id}')">edit</span>
-  <span class="material-symbols-outlined delete" onclick="eliminarProyecto('${proyecto.id}')">delete_forever</span>
-`;
-
   cerrarEditor();
   cargarProyectosAdmin();
 }
+
