@@ -34,7 +34,7 @@
       }
 
       try {
-        const res = await fetch('/api/proyectos');
+const res = await fetch('./frontend/public/data/proyectos.json');
         const proyectos = await res.json();
         const proyecto = proyectos.find(p => p.id === id);
 

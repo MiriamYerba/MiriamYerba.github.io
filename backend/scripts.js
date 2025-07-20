@@ -189,7 +189,7 @@ const res = await fetch('proyectos.json');
     }
 
     async function actualizarDescripcion(id, nuevaDesc) {
-      await fetch(`proyectos.json/${id}`, {
+      await fetch(`/api/proyectos/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ descripcion: nuevaDesc })
@@ -200,11 +200,11 @@ const res = await fetch('proyectos.json');
   const galeria = document.getElementById('galeriaVisitante');
   galeria.innerHTML = '';
 
-  const res = await fetch('proyectos.json');
+  const res = await fetch('/api/proyectos');
   const proyectos = await res.json();
 
   proyectos.forEach(p => {
-const imagen = (p.imagenes && p.imagenes[0]) ? `img_proyectos/${p.imagenes[0]}` : 'img_proyectos/placeholder.jpg';
+    const imagenUrl = (p.imagenes && p.imagenes.length > 0) ? p.imagenes[0] : 'placeholder.jpg';
 
     const card = document.createElement('div');
     card.className = 'card';
@@ -443,6 +443,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const lightbox = document.getElementById('lightbox');
   lightbox.addEventListener('click', cerrarLightbox);
 });
+
+
+const dataPath = path.join(__dirname, 'data', 'proyectos.json');
+
+if (!fs.existsSync(dataPath)) {
+  fs.writeFileSync(dataPath, '[]'); // crea archivo vacío si no existe
+}
+
+const proyectos = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
 
 cargarDetalleProyecto();
 cargarProyectos();
