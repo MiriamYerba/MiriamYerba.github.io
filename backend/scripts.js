@@ -204,7 +204,7 @@ const res = await fetch('proyectos.json');
   const proyectos = await res.json();
 
   proyectos.forEach(p => {
-    const imagenUrl = (p.imagenes && p.imagenes.length > 0) ? p.imagenes[0] : 'placeholder.jpg';
+const imagen = (p.imagenes && p.imagenes[0]) ? `img_proyectos/${p.imagenes[0]}` : 'img_proyectos/placeholder.jpg';
 
     const card = document.createElement('div');
     card.className = 'card';
