@@ -2,7 +2,7 @@ async function cargarProyectosVisitante() {
   const galeria = document.getElementById('galeriaVisitante');
   galeria.innerHTML = '';
   try {
-    const res = await fetch('/api/proyectos');
+    const res = await fetch('data/proyectos.json');
     const proyectos = await res.json();
 
     proyectos.forEach(p => {
@@ -37,7 +37,10 @@ async function cargarProyectosVisitante() {
 
 
 function verDetalle(id) {
-  window.location.href = `/proyecto.html?id=${id}`;
+  const url = `/proyecto.html?id=${id}`;
+  console.log('Redirigiendo a:', url);
+  window.location.href = url;
 }
+
 
 window.onload = cargarProyectosVisitante;
