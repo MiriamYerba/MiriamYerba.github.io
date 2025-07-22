@@ -8,7 +8,7 @@ async function cargarDetalleProyecto() {
   }
 
   try {
-    const res = await fetch('/api/proyectos');
+    const res = await fetch('/data/proyectos.json'); // ← adaptado para GitHub Pages
     const proyectos = await res.json();
     const proyecto = proyectos.find(p => p.id === id);
 
@@ -24,7 +24,6 @@ async function cargarDetalleProyecto() {
     galeria.innerHTML = '';
 
     proyecto.imagenes.forEach(url => {
-      // Corregir si no empieza con `/` ni con `http`
       if (!url.startsWith('http') && !url.startsWith('/')) {
         url = '/' + url;
       }
@@ -38,26 +37,26 @@ async function cargarDetalleProyecto() {
 
   } catch (err) {
     console.error('Error al cargar proyecto:', err);
+    document.getElementById('titulo').innerText = 'Error al cargar el proyecto';
   }
 }
 
+function mostrarLightbox(url) {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+  lightboxImg.src = url;
+  lightbox.style.display = 'flex';
+}
 
-    function mostrarLightbox(url) {
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightbox-img');
-      lightboxImg.src = url;
-      lightbox.style.display = 'flex';
-    }
+function cerrarLightbox() {
+  document.getElementById('lightbox').style.display = 'none';
+}
 
-    function cerrarLightbox() {
-      document.getElementById('lightbox').style.display = 'none';
-    }
+function cerrarLightboxSiClickFuera(event) {
+  const img = document.getElementById('lightbox-img');
+  if (!img.contains(event.target)) {
+    cerrarLightbox();
+  }
+}
 
-    function cerrarLightboxSiClickFuera(event) {
-      const img = document.getElementById('lightbox-img');
-      if (!img.contains(event.target)) {
-        cerrarLightbox();
-      }
-    }
-
-    window.onload = cargarDetalleProyecto;
+window.onload = cargarDetalleProyecto;
