@@ -1,19 +1,19 @@
+/* === GENERALES === */
 body {
   font-family: 'Segoe UI', sans-serif;
-  background-image: url('../img/Fondo.jpg'); /* SIN .. si estás sirviendo como estático */
-   background-size: cover;
+  background-image: url('../img/Fondo.jpg');
+  background-size: cover;
   background-position: center;
   margin: 0;
   padding: 0;
   color: #fff;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
 }
 
 .proyecto-detalle {
-position: center;
   max-width: 1200px;
   margin: auto;
   text-align: center;
@@ -21,6 +21,11 @@ position: center;
   padding: 3rem;
   border-radius: 12px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+}
+
+.proyecto-detalle h1,
+.proyecto-detalle h1#titulo {
+  color: #fff !important;
 }
 
 h1 {
@@ -34,11 +39,11 @@ h1 {
   margin-bottom: 2.5rem;
   color: #ddd;
   line-height: 1.6;
-  word-break: break-word;        /* 🔧 fuerza el corte de palabras largas */
-  overflow-wrap: break-word;     /* 🔧 asegura compatibilidad adicional */
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
-
+/* === GALERÍA MINIATURAS === */
 .galeria {
   display: flex;
   flex-wrap: wrap;
@@ -47,8 +52,8 @@ h1 {
 }
 
 .galeria img {
-  width: 300px;
-  height: 220px;
+  width: 280px;
+  height: 200px;
   object-fit: cover;
   border-radius: 10px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -61,41 +66,59 @@ h1 {
   box-shadow: 0 6px 18px rgba(255, 255, 255, 0.2);
 }
 
-button {
-  margin-top: 2rem;
-  padding: 0.8rem 1.6rem;
-  font-size: 1.1rem;
-  font-weight: bold;
+/* === BOTÓN VOLVER === */
+.btn-volver {
+  background-color: #444;
+  color: white;
+  padding: 8px 16px;
   border: none;
   border-radius: 6px;
-  background-color: #444;
-  color: #fff;
+  font-weight: 600;
+  align-items: center;
+  gap: 8px;
   cursor: pointer;
   transition: background-color 0.2s ease;
+  font-size: 1rem;
 }
 
-button:hover {
-  background-color: #222;
+.btn-volver:hover {
+  background-color: #333;
 }
 
-/* Lightbox */
-.lightbox {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.9);
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
+/* === CARRUSEL DENTRO DEL MODAL === */
+.carousel-inner img {
+  max-height: 90vh;
+  object-fit: contain;
+  background-color: #000;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
 }
 
-.lightbox img {
-  max-width: 90%;
-  max-height: 90%;
-  border-radius: 12px;
-  box-shadow: 0 0 30px black;
-  pointer-events: none;
+/* Modal fondo negro sin bordes */
+.modal-content.bg-black {
+  background-color: #000;
+  border: none;
+  border-radius: 0;
+}
+
+/* Controladores del carrusel */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  filter: invert(1); /* iconos blancos */
+}
+
+.btn-close-white {
+  filter: invert(1);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .galeria img {
+    width: 100%;
+    height: auto;
+  }
+
+  .proyecto-detalle {
+    padding: 2rem 1rem;
+  }
 }

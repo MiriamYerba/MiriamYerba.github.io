@@ -1,5 +1,3 @@
-// admin.js corregido
-
 let proyectosGlobal = [];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -34,7 +32,7 @@ function volverAlInicio() {
 }
 
 async function cargarProyectosAdmin() {
-  const res = await fetch('/api/proyectos');
+  const res = await fetch('/data/proyectos.json');
   proyectosGlobal = await res.json();
   renderizarProyectos(proyectosGlobal);
 }
@@ -187,11 +185,25 @@ try{
   console.error(err);
 }
 
-
-
-
-
 cerrarEditor();
 cargarProyectosAdmin();
 
 }
+
+document.getElementById('imagen').addEventListener('change', function () {
+  const lista = document.getElementById('lista-imagenes');
+  lista.innerHTML = ''; // Limpiar lista previa
+
+  const archivos = this.files;
+
+  if (archivos.length === 0) {
+    lista.innerHTML = '<li>No se seleccionaron imágenes.</li>';
+    return;
+  }
+
+  for (const archivo of archivos) {
+    const li = document.createElement('li');
+    li.textContent = archivo.name;
+    lista.appendChild(li);
+  }
+});

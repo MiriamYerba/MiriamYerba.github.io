@@ -1,7 +1,7 @@
 body, html {
   height: 100%;
   margin: 0;
-  background-image: url('../img/Fondo.jpg'); /* O la ruta correcta */
+  background-image: url('../img/Fondo.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -15,13 +15,19 @@ body, html {
   transform: translateX(-50%);
   pointer-events: none;
 }
-
+.navbar h1{
+  color: rgba(255, 255, 255, 0.765);
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+}
 .navbar {
   position: relative;
-  background-color: rgba(0, 0, 0, 0.253);
+  background-color: rgba(0, 0, 0, 0.8);
   padding: 1rem 2rem;
   display: flex;
   align-items: center;
+  text-decoration-color: white;
 }
 
 .btn-volver {
@@ -99,4 +105,13 @@ main {
   color: #555;
   word-break: break-word;
   overflow-wrap: break-word;
+}
+
+.descripcion {
+  display: -webkit-box;
+  -webkit-line-clamp: 5;
+  line-clamp: 5;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
