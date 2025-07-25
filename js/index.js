@@ -4,7 +4,7 @@ function mostrarLoginAdmin() {
   loginDiv.classList.remove('d-none');
   loginDiv.classList.add('d-block');
 }
-
+const ADMIN_PASSWORD = '123';
 // ✅ Validar contraseña y redirigir
 async function login() {
   const pass = document.getElementById('adminPass').value;

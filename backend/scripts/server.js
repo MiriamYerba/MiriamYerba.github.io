@@ -11,7 +11,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000;
+const PORT = 8080;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
 
 // === Rutas absolutas ===
 const ROOT_PATH = path.resolve(__dirname, '../..');
@@ -71,8 +72,7 @@ app.post('/api/proyectos', (req, res) => {
 app.delete('/api/proyectos/:id', (req, res) => {
   const id = parseInt(req.params.id);
   const { password } = req.query;
-
-  if (password !== process.env.ADMIN_PASSWORD) {
+  if (password !== ADMIN_PASSWORD) {
     return res.status(401).json({ error: 'Contraseña incorrecta' });
   }
 
