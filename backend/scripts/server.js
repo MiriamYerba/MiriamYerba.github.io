@@ -11,8 +11,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3000 || 8080;
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+const PORT = 8080;
+const ADMIN_PASSWORD = 123;
 
 // === Rutas absolutas ===
 const ROOT_PATH = path.resolve(__dirname, '../..');
